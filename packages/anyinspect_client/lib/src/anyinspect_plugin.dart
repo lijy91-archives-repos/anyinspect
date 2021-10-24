@@ -1,4 +1,8 @@
+import 'dart:collection';
+import 'dart:convert';
+
 import 'anyinspect_connection.dart';
+import 'anyinspect_receiver.dart';
 
 class AnyInspectPluginInfo extends AnyInspectPlugin {
   @override
@@ -18,22 +22,46 @@ class AnyInspectPluginInfo extends AnyInspectPlugin {
 }
 
 abstract class AnyInspectPlugin {
+  final Map<String, List<AnyInspectReceiver>> _receivers = HashMap();
   AnyInspectConnection? _connection;
 
   String get id;
-  AnyInspectConnection get connection {
-    if (_connection == null) {
-      throw UnimplementedError();
-    }
-    return _connection!;
-  }
 
-  void onConnect(AnyInspectConnection connection) {
+  void setConnection(AnyInspectConnection connection) {
     _connection = connection;
+    _connection!.receive('plugin_$id/messaging', (data) {
+      final map = json.decode(data);
+      final method = map['method'];
+      final params = Map<String, dynamic>.from(map['params']);
+      notifyReceivers(method, params);
+    });
   }
 
-  void onDisconnect() {
-    _connection = null;
+  void send(String method, Object params) {
+    _connection!.send(
+      'plugin_$id/messaging',
+      json.encode({
+        'method': method,
+        'params': params,
+      }),
+    );
+  }
+
+  void receive(String method, AnyInspectReceiver receiver) {
+    _receivers.putIfAbsent(method, () => <AnyInspectReceiver>[]);
+    _receivers[method]!.add(receiver);
+  }
+
+  void notifyReceivers(String method, dynamic params) {
+    if (_receivers.containsKey(method)) {
+      List<AnyInspectReceiver> l = _receivers[method]!;
+      for (var i = 0; i < l.length; i++) {
+        l[i](params);
+      }
+    } else {
+      print(method);
+      print(params);
+    }
   }
 
   Map<String, dynamic> toJson() {
