@@ -4,9 +4,9 @@ packages:
   anyinspect_client:
     dependency: "direct main"
     description:
-      name: anyinspect_client
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../anyinspect_client"
+      relative: true
+    source: path
     version: "0.0.1"
   async:
     dependency: transitive

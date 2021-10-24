@@ -14,6 +14,6 @@ dependencies:
   uuid: ^3.0.5
   web_socket_channel: ^2.1.0
 
-# dependency_overrides:
-#   anyinspect_client:
-#     path: ../anyinspect_client
+dependency_overrides:
+  anyinspect_client:
+    path: ../anyinspect_client

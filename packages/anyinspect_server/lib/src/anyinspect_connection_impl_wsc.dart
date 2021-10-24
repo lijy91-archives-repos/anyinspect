@@ -18,24 +18,13 @@ class AnyInspectConnectionImplWsc extends AnyInspectConnection {
   Future<void> connect() async {
     _channel.stream.listen(
       (event) {
-        try {
-          final map = json.decode(event);
-          String method = map['method'];
-          Map<String, dynamic> params =
-              Map<String, dynamic>.from(map['params']);
-
-          for (var receiver in receivers[method]!) {
-            receiver(params);
-          }
-        } catch (error) {
-          print(error);
-        }
+        final map = json.decode(event);
+        final method = map['method'];
+        final params = map['params'];
+        notifyReceivers(method, params);
       },
       onDone: () {
-        String method = 'disconnect';
-        for (var receiver in receivers[method]!) {
-          receiver({});
-        }
+        notifyReceivers('disconnect', {});
       },
     );
   }

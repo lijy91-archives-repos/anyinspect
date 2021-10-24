@@ -18,10 +18,6 @@ class AnyInspectServer {
   final List<AnyInspectServerListener> _listeners = [];
   final List<AnyInspectClient> _clients = [];
 
-  List<AnyInspectServerListener> get listeners {
-    return _listeners;
-  }
-
   bool get hasListeners {
     return _listeners.isNotEmpty;
   }
@@ -55,7 +51,7 @@ class AnyInspectServer {
 
   _handleClientConnect(AnyInspectConnection connection, dynamic data) {
     final client = AnyInspectClient.fromJson(Map<String, dynamic>.from(data));
-    client.connection = connection;
+    client.setConnection(connection);
     _clients.add(client);
 
     for (var listener in _listeners) {
