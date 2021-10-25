@@ -1,0 +1,19 @@
+name: anyinspect_ui
+description: AnyInspect UI
+version: 0.0.1
+homepage: https://github.com/anyinspect/anyinspect
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  multi_split_view: ^1.9.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
