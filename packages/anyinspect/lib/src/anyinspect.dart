@@ -48,17 +48,23 @@ class AnyInspect with AnyInspectClientListener {
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidDeviceInfo = await deviceInfoPlugin.androidInfo;
       _client.deviceId = androidDeviceInfo.id;
+      _client.deviceName = androidDeviceInfo.display;
       _client.deviceIsPhysical = androidDeviceInfo.isPhysicalDevice;
     } else if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfoPlugin.iosInfo;
       _client.deviceId = iosInfo.identifierForVendor;
+      _client.deviceName = iosInfo.name;
       _client.deviceIsPhysical = iosInfo.isPhysicalDevice;
       // } else if (Platform.isLinux) {
       //   LinuxDeviceInfo linuxDeviceInfo = await deviceInfoPlugin.linuxInfo;
       //   _client.deviceId = linuxDeviceInfo.id;
-      // } else if (Platform.isMacOS) {
-      //   MacOsDeviceInfo macOsDeviceInfo = await deviceInfoPlugin.macOsInfo;
-      //   _client.deviceId = macOsDeviceInfo.systemGUID;
+    } else if (Platform.isMacOS) {
+      MacOsDeviceInfo macOsDeviceInfo = await deviceInfoPlugin.macOsInfo;
+      _client.deviceId = macOsDeviceInfo.systemGUID;
+      _client.deviceName = macOsDeviceInfo.computerName;
+    } else if (Platform.isWindows) {
+      WindowsDeviceInfo windowsDeviceInfo = await deviceInfoPlugin.windowsInfo;
+      _client.deviceName = windowsDeviceInfo.computerName;
     }
 
     _client.deviceSystem = Platform.operatingSystem;

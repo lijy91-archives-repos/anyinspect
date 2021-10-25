@@ -12,6 +12,7 @@ class AnyInspectClient {
   String? appVersion;
   String? appBuildNumber;
   String? deviceId;
+  String? deviceName;
   bool? deviceIsPhysical;
   String? deviceSystem;
   String? deviceSystemVersion;
@@ -24,6 +25,7 @@ class AnyInspectClient {
     this.appVersion,
     this.appBuildNumber,
     this.deviceId,
+    this.deviceName,
     this.deviceIsPhysical,
     this.deviceSystem,
     this.deviceSystemVersion,
@@ -93,6 +95,7 @@ class AnyInspectClient {
       appVersion: json['appVersion'],
       appBuildNumber: json['appBuildNumber'],
       deviceId: json['deviceId'],
+      deviceName: json['deviceName'],
       deviceIsPhysical: json['deviceIsPhysical'],
       deviceSystem: json['deviceSystem'],
       deviceSystemVersion: json['deviceSystemVersion'],
@@ -110,6 +113,7 @@ class AnyInspectClient {
       'appVersion': appVersion,
       'appBuildNumber': appBuildNumber,
       'deviceId': deviceId,
+      'deviceName': deviceName,
       'deviceIsPhysical': deviceIsPhysical,
       'deviceSystem': deviceSystem,
       'deviceSystemVersion': deviceSystemVersion,
