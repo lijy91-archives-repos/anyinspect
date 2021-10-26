@@ -14,7 +14,7 @@ class _TableColumn extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
       ),
-      constraints: const BoxConstraints(minHeight: 30),
+      constraints: const BoxConstraints(minHeight: 34),
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.only(left: 14),
       child: DefaultTextStyle(
@@ -69,8 +69,11 @@ class DataTable extends StatelessWidget {
                       row.onSelectChanged!(true);
                     },
                     child: Container(
-                      constraints: BoxConstraints(minHeight: 32),
+                      constraints: BoxConstraints(minHeight: 34),
                       decoration: BoxDecoration(
+                        color: row.selected
+                            ? Theme.of(context).scaffoldBackgroundColor
+                            : null,
                         border: Border(
                           bottom: BorderSide(
                             color: Theme.of(context).dividerColor,

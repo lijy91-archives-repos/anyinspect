@@ -14,6 +14,7 @@ class DataViewer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      controller: ScrollController(),
       children: children,
     );
   }

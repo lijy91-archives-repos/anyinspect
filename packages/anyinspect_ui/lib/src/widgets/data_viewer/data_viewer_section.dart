@@ -38,7 +38,7 @@ class _DataViewerSectionState extends State<DataViewerSection> {
             decoration: BoxDecoration(
               color: Theme.of(context).scaffoldBackgroundColor,
             ),
-            constraints: const BoxConstraints(minHeight: 32),
+            constraints: const BoxConstraints(minHeight: 34),
             child: Row(
               children: [
                 Container(

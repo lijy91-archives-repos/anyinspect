@@ -14,13 +14,17 @@ class DataViewerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(
-        left: 10,
-        right: 10,
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Theme.of(context).dividerColor,
+            width: 0.5,
+          ),
+        ),
       ),
       padding: const EdgeInsets.only(
-        left: 6,
-        right: 6,
+        left: 14,
+        right: 14,
         top: 6,
         bottom: 6,
       ),
