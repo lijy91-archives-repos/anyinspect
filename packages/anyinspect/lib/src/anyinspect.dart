@@ -18,7 +18,6 @@ class AnyInspect with AnyInspectClientListener {
 
   final AnyInspectClient _client = AnyInspectClient(plugins: []);
 
-  bool _autoReconnect = false;
   Timer? _reconnectTimer;
 
   List<AnyInspectPlugin> get allPlugins => _client.plugins.toList();
@@ -35,8 +34,32 @@ class AnyInspect with AnyInspectClientListener {
     return _client.plugins.firstWhere((e) => e.id == pluginId);
   }
 
-  Future<void> start({bool autoReconnect = false}) async {
-    _autoReconnect = autoReconnect;
+  Future<void> _connect() async {
+    await _client.connect();
+  }
+
+  Future<void> _startReconnect() async {
+    _stopReconnect();
+    _reconnectTimer = Timer(const Duration(seconds: 2), () async {
+      await _connect();
+    });
+  }
+
+  Future<void> _stopReconnect() async {
+    if (_reconnectTimer != null && _reconnectTimer!.isActive) {
+      _reconnectTimer!.cancel();
+      _reconnectTimer = null;
+    }
+  }
+
+  Future<void> start({
+    String serverAddress = '127.0.0.1',
+    int serverPort = 7700,
+  }) async {
+    if (_client.connection is AnyInspectConnectionImplWs) {
+      (_client.connection as AnyInspectConnectionImplWs)
+          .setServerUrl('ws://$serverAddress:$serverPort');
+    }
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     _client.appIdentifier = packageInfo.packageName;
@@ -70,31 +93,25 @@ class AnyInspect with AnyInspectClientListener {
     _client.deviceSystem = Platform.operatingSystem;
     _client.deviceSystemVersion = Platform.operatingSystemVersion;
 
-    await _reconnect();
+    try {
+      await _connect();
+    } catch (error) {
+      _startReconnect();
+    }
   }
 
-  Future<void> stop() async {}
-
-  Future<void> _reconnect() async {
-    await _client.connect();
+  Future<void> stop() async {
+    _stopReconnect();
+    _client.connection.disconnect();
   }
 
   @override
   void onConnect(AnyInspectClient client) {
-    print('onConnect');
+    _stopReconnect();
   }
 
   @override
   void onDisconnect(AnyInspectClient client) {
-    print('onDisconnect');
-    if (_autoReconnect) {
-      _reconnectTimer = Timer(const Duration(seconds: 2), () async {
-        if (_reconnectTimer != null || _reconnectTimer!.isActive) {
-          _reconnectTimer!.cancel();
-          _reconnectTimer = null;
-        }
-        await _reconnect();
-      });
-    }
+    _startReconnect();
   }
 }

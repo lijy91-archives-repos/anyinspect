@@ -7,6 +7,12 @@ import 'package:anyinspect_client/anyinspect_client.dart';
 class AnyInspectConnectionImplWs extends AnyInspectConnection {
   WebSocket? _webSocket;
 
+  String? _serverUrl;
+
+  void setServerUrl(String serverUrl) {
+    _serverUrl = serverUrl;
+  }
+
   @override
   bool get connected => _webSocket != null;
 
@@ -15,10 +21,9 @@ class AnyInspectConnectionImplWs extends AnyInspectConnection {
 
   @override
   Future<void> connect() async {
-    _webSocket ??= await WebSocket.connect('ws://localhost:7700');
+    _webSocket ??= await WebSocket.connect(_serverUrl!);
     _webSocket!.listen(
       (event) {
-        print(event);
         final map = json.decode(event);
         final method = map['method'];
         final params = map['params'];
