@@ -27,6 +27,11 @@ abstract class AnyInspectPlugin {
 
   String get id;
 
+  String get name => id
+      .split('_')
+      .map((e) => '${e.substring(0, 1).toUpperCase()}${e.substring(1)}')
+      .join('');
+
   void setConnection(AnyInspectConnection connection) {
     _connection = connection;
     _connection!.receive('plugin_$id/messaging', (data) {
