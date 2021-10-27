@@ -18,6 +18,9 @@ class AnyInspectServer {
   final List<AnyInspectServerListener> _listeners = [];
   final List<AnyInspectClient> _clients = [];
 
+  String serverAddress = '0.0.0.0';
+  int serverPort = 0;
+
   bool get hasListeners {
     return _listeners.isNotEmpty;
   }
@@ -33,8 +36,8 @@ class AnyInspectServer {
   List<AnyInspectClient> get allClients => _clients;
 
   Future<void> start({
-    String address = 'localhost',
-    int port = 7700,
+    required String address,
+    required int port,
   }) async {
     final handler = webSocketHandler(
       (WebSocketChannel channel) {
@@ -45,6 +48,8 @@ class AnyInspectServer {
       },
     );
     shelf_io.serve(handler, address, port).then((server) {
+      this.serverAddress = server.address.host;
+      this.serverPort = server.port;
       print('Serving at ws://${server.address.host}:${server.port}');
     });
   }

@@ -18,5 +18,8 @@ class AnyInspectServerListener2 extends AnyInspectServerListener {
 Future<void> main(List<String> args) async {
   AnyInspectServer anyInspectServer = AnyInspectServer.instance;
   anyInspectServer.addListener(AnyInspectServerListener2());
-  await anyInspectServer.start();
+  await anyInspectServer.start(
+    address: '127.0.0.1',
+    port: 7700,
+  );
 }
