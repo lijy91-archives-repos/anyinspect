@@ -11,7 +11,7 @@
 
 ```yaml
 dependencies:
-  anyinspect_server: ^0.0.1
+  anyinspect_server: ^0.0.2
 ```
 
 ## Usage

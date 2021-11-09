@@ -1,19 +1,19 @@
 name: anyinspect_server
 description: AnyInspect Server
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/anyinspect/anyinspect
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  anyinspect_client: ^0.0.1
+  anyinspect_client: ^0.0.2
   collection: ^1.15.0
   shelf: ^1.1.0
   shelf_web_socket: ^1.0.1
   uuid: ^3.0.5
   web_socket_channel: ^2.1.0
 
-dependency_overrides:
-  anyinspect_client:
-    path: ../anyinspect_client
+# dependency_overrides:
+#   anyinspect_client:
+#     path: ../anyinspect_client
