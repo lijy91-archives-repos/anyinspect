@@ -37,8 +37,14 @@ class _DataViewerSectionState extends State<DataViewerSection> {
             width: double.infinity,
             decoration: BoxDecoration(
               color: Theme.of(context).scaffoldBackgroundColor,
+              border: Border(
+                bottom: BorderSide(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
+                ),
+              ),
             ),
-            constraints: const BoxConstraints(minHeight: 34),
+            constraints: const BoxConstraints(minHeight: 36),
             child: Row(
               children: [
                 Container(

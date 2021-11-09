@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 
-import '../panel/panel.dart';
-
 class Inspector extends StatelessWidget {
   final Widget child;
   final Widget? detailView;
@@ -24,18 +22,13 @@ class Inspector extends StatelessWidget {
       ];
     }
     return Container(
+      color: Theme.of(context).canvasColor,
       width: double.infinity,
       height: double.infinity,
-      margin: const EdgeInsets.only(top: 14, bottom: 14),
       child: MultiSplitView(
         children: [
-          Panel(
-            child: child,
-          ),
-          if (detailView != null)
-            Panel(
-              child: detailView!,
-            ),
+          child,
+          if (detailView != null) detailView!,
         ],
         controller: MultiSplitViewController(
           initialWeights: initialWeights,

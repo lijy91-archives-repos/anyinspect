@@ -13,8 +13,14 @@ class _TableColumn extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
+        border: Border(
+          bottom: BorderSide(
+            color: Theme.of(context).dividerColor,
+            width: 1,
+          ),
+        ),
       ),
-      constraints: const BoxConstraints(minHeight: 34),
+      constraints: const BoxConstraints(minHeight: 36),
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.only(left: 14),
       child: DefaultTextStyle(
@@ -69,15 +75,15 @@ class DataTable extends StatelessWidget {
                       row.onSelectChanged!(true);
                     },
                     child: Container(
-                      constraints: BoxConstraints(minHeight: 34),
+                      constraints: BoxConstraints(minHeight: 36),
                       decoration: BoxDecoration(
                         color: row.selected
-                            ? Theme.of(context).scaffoldBackgroundColor
+                            ? Theme.of(context).primaryColor
                             : null,
                         border: Border(
                           bottom: BorderSide(
                             color: Theme.of(context).dividerColor,
-                            width: 0.5,
+                            width: 1,
                           ),
                         ),
                       ),
@@ -88,7 +94,17 @@ class DataTable extends StatelessWidget {
                               flex: initialColumnWeights[i],
                               child: Container(
                                 padding: EdgeInsets.only(left: 14),
-                                child: row.cells[i].child,
+                                child: DefaultTextStyle(
+                                  style: TextStyle(
+                                    color: row.selected
+                                        ? Colors.white
+                                        : Theme.of(context)
+                                            .textTheme
+                                            .bodyText2!
+                                            .color,
+                                  ),
+                                  child: row.cells[i].child,
+                                ),
                               ),
                             ),
                         ],
