@@ -1,8 +1,38 @@
-import 'dart:collection';
 import 'dart:convert';
 
 import 'anyinspect_connection.dart';
-import 'anyinspect_receiver.dart';
+
+class AnyInspectPluginEvent {
+  const AnyInspectPluginEvent(this.name, [this.arguments]);
+
+  /// The name of the event.
+  final String name;
+
+  /// The arguments for the event.
+  final dynamic arguments;
+}
+
+class AnyInspectPluginEventListener {
+  void onEvent(AnyInspectPluginEvent event) {
+    throw UnimplementedError();
+  }
+}
+
+class AnyInspectPluginMethod {
+  const AnyInspectPluginMethod(this.name, [this.arguments]);
+
+  /// The name of the method.
+  final String name;
+
+  /// The arguments for the method.
+  final dynamic arguments;
+}
+
+class AnyInspectPluginMethodHandler {
+  Future<void> handleMethod(AnyInspectPluginMethod method) {
+    throw UnimplementedError();
+  }
+}
 
 class AnyInspectPluginInfo extends AnyInspectPlugin {
   @override
@@ -22,8 +52,10 @@ class AnyInspectPluginInfo extends AnyInspectPlugin {
 }
 
 abstract class AnyInspectPlugin {
-  final Map<String, List<AnyInspectReceiver>> _receivers = HashMap();
   AnyInspectConnection? _connection;
+
+  final List<AnyInspectPluginEventListener> _eventListeners = [];
+  final List<AnyInspectPluginMethodHandler> _methodHandlers = [];
 
   String get id;
 
@@ -36,37 +68,68 @@ abstract class AnyInspectPlugin {
     _connection = connection;
     _connection!.receive('plugin_$id/messaging', (data) {
       final map = json.decode(data);
-      final method = map['method'];
-      final params = Map<String, dynamic>.from(map['params']);
-      notifyReceivers(method, params);
+      final type = map['type'];
+      final name = map['name'];
+      final arguments = Map<String, dynamic>.from(map['arguments']);
+
+      if (type == 'event') {
+        final event = AnyInspectPluginEvent(name, arguments);
+        for (var i = 0; i < _eventListeners.length; i++)
+          _eventListeners[i].onEvent(event);
+      }
+      if (type == 'method') {
+        final method = AnyInspectPluginMethod(name, arguments);
+        for (var i = 0; i < _methodHandlers.length; i++)
+          _methodHandlers[i].handleMethod(method);
+      }
     });
   }
 
-  void send(String method, Object params) {
-    _connection!.send(
-      'plugin_$id/messaging',
-      json.encode({
-        'method': method,
-        'params': params,
-      }),
+  void addEventListener(AnyInspectPluginEventListener listener) {
+    _eventListeners.add(listener);
+  }
+
+  void removeEventListener(AnyInspectPluginEventListener listener) {
+    _eventListeners.remove(listener);
+  }
+
+  void addMethodHandler(AnyInspectPluginMethodHandler handler) {
+    _methodHandlers.add(handler);
+  }
+
+  void removeMethodHandler(AnyInspectPluginMethodHandler handler) {
+    _methodHandlers.remove(handler);
+  }
+
+  void emitEvent(String event, [dynamic arguments]) {
+    _send(
+      type: 'event',
+      name: event,
+      arguments: arguments ?? {},
     );
   }
 
-  void receive(String method, AnyInspectReceiver receiver) {
-    _receivers.putIfAbsent(method, () => <AnyInspectReceiver>[]);
-    _receivers[method]!.add(receiver);
+  void callMethod(String method, [dynamic arguments]) {
+    _send(
+      type: 'method',
+      name: method,
+      arguments: arguments ?? {},
+    );
   }
 
-  void notifyReceivers(String method, dynamic params) {
-    if (_receivers.containsKey(method)) {
-      List<AnyInspectReceiver> l = _receivers[method]!;
-      for (var i = 0; i < l.length; i++) {
-        l[i](params);
-      }
-    } else {
-      print(method);
-      print(params);
-    }
+  void _send({
+    required String type,
+    required String name,
+    required Object arguments,
+  }) {
+    _connection!.send(
+      'plugin_$id/messaging',
+      json.encode({
+        'type': type,
+        'name': name,
+        'arguments': arguments,
+      }),
+    );
   }
 
   Map<String, dynamic> toJson() {
