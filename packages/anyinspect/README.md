@@ -11,7 +11,7 @@
 
 ```yaml
 dependencies:
-  anyinspect: ^0.0.1
+  anyinspect: ^0.0.2
 ```
 
 ## Usage
