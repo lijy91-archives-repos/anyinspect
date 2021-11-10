@@ -121,9 +121,10 @@ class AnyInspect with AnyInspectClientListener {
         _client.deviceId = macOsDeviceInfo.systemGUID;
         _client.deviceName = macOsDeviceInfo.computerName;
       } else if (Platform.isWindows) {
-        WindowsDeviceInfo windowsDeviceInfo =
-            await deviceInfoPlugin.windowsInfo;
-        _client.deviceName = windowsDeviceInfo.computerName;
+        // WindowsDeviceInfo windowsDeviceInfo =
+        //     await deviceInfoPlugin.windowsInfo;
+        // _client.deviceName = windowsDeviceInfo.computerName;
+        _client.deviceName = Platform.localHostname;
       }
       _client.deviceSystem = Platform.operatingSystem;
       _client.deviceSystemVersion = Platform.operatingSystemVersion;
