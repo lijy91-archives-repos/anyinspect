@@ -1,6 +1,6 @@
 name: anyinspect_client
-description: AnyInspect Client
-version: 0.0.2
+description: AnyInspect client.
+version: 0.1.0
 homepage: https://github.com/anyinspect/anyinspect
 
 environment:
