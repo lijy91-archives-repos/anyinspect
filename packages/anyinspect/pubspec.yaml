@@ -1,6 +1,6 @@
 name: anyinspect
-description: ""
-version: 0.0.3
+description: "AnyInspect integration kit."
+version: 0.1.1
 homepage: https://github.com/anyinspect/anyinspect
 
 environment:
@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  anyinspect_client: ^0.0.2
+  anyinspect_client: ^0.1.0
   device_info_plus: ^3.1.0
   draggable_float_widget: ^0.0.1
   network_info_plus: ^2.1.0
