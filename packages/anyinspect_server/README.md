@@ -5,13 +5,19 @@
 [pub-image]: https://img.shields.io/pub/v/anyinspect_server.svg
 [pub-url]: https://pub.dev/packages/anyinspect_server
 
+AnyInspect server.
+
+[![Discord](https://img.shields.io/badge/discord-%237289DA.svg?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/uJcUXQrs)
+
+---
+
 ## Quick Start
 
 ### Installation
 
 ```yaml
 dependencies:
-  anyinspect_server: ^0.0.2
+  anyinspect_server: ^0.1.0
 ```
 
 ## Usage

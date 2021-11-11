@@ -1,13 +1,13 @@
 name: anyinspect_server
-description: AnyInspect Server
-version: 0.0.2
+description: AnyInspect server.
+version: 0.1.1
 homepage: https://github.com/anyinspect/anyinspect
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  anyinspect_client: ^0.0.2
+  anyinspect_client: ^0.1.0
   collection: ^1.15.0
   shelf: ^1.1.0
   shelf_web_socket: ^1.0.1
