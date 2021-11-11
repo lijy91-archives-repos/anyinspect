@@ -1,0 +1,26 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
+
+class AnyInspectLogo extends StatelessWidget {
+  final Color color;
+  final double size;
+
+  const AnyInspectLogo({
+    Key? key,
+    this.color = Colors.grey,
+    this.size = 68,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    Uint8List bytes = Base64Decoder().convert(
+        'iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAABOvAAATrwFj5o7DAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAABRpJREFUeJztm89vVUUUxz99T0sTa1/pD0ElQoPYkKpbDTuDRLaaqAtEYioBu5BfIbrB8HRhNIQFscTEhKjBhRIwupGIJsZ/AaISq7EFA2hN6A9tS0rr4twX9XLOfTP3zryivm8ym3lzv+fM987MPXNmHjTRRBNN/I/R0kBbK4D7gX5gNdAJtCe/TQNXgVHgPHAOuNJA36KgBGwCjgLfAoue5RtgGNiYcP1r0Au8ClzAv9NWGQOqQE8D++GN5cBhZDiH6ni6TAOHkOlz06AF2IbM2VgdT5fLwNZQzhdBJ3AMeNzjmVnge0Sw35O624CVwL1AmwfXSWAQmPB4JhgGgB+p/7ZmgVPADuQLkLWglZI2O4GPgTkH/h+A9UF75oANwG91HBsDdgNdBex0AXuov6COAw8XsOOFDcjQtZy5CuwCWgPabEWEmMiwO00DRBgg+82fBu6MaP8u4PMM++NEnA6d2HN+AThAYwKWEnAwsan5MgJUQhttQRYyzeA88Fxogw4YTGxrPn0U2tg2w9ACS9P5GgaxR8KWUEaWYwc5B0IZKYAqum+XCDQVDhsGTnNzbFJKwBl0H98sSt6LHttPEHe198XdwCQ3+jkFdGc9WK5D/DLwqFL/EvCFt5uCChI6Pw08CzwBPARcQ4KnPJhCosbHUvWtwAzwVR7SEnoENka+IKcPOI4d3hZduZcBFxXeUXJO1U2Go7tycA1RP64P8enaa3A/kofsqEI0i39sf8hwKoYA3ehCH8lDpqWxTnlyDCkcMQUA+EThPudLstJwcocHRx9u29laOenrpIEXFO4F4A4fko2Gk/0eHMcNDqucJ0yWer3B77UOaEP3D9xX0wp+b79WXqG4CGVkrUpz79Qa32KQrFHqRpCh5ILN5PtUVoFngLPA9dRvbwFfO3BcR3wdSNX3aY0tATqUul8djNfwgEfbNNYlJY0R3AQA+IUbBdD6ZA7pdqVuytE4SOIiNHw4NV+1PkXbzCxG4Jwv+PwyrdISYFqpUxU0cMmjrSt+9mirDncNlgCTSp3Pd/SsR1tX+AQzva4NLQFGlbp11N891vAZsrsLhTkk/+CCMrDWldgS4Dulrg05uXHBJGHzch/ivgj343e6pGIFeq5NDSYMrEEPSHzLDHCPh11r/6G+EGsEXEEfBemEQxZ+It/WOY0X8UuUbA5gE5DLCWkV5/DfDr+h8LiW1z1t9RAw4WJtiHb7EiG7SJ/pMAM8n8POvgxObwFKyNBLE13ACCrqYDXwPtlCzALv4Tfna2hDYoVgAoCdc9+ThyxBB/AUco3mWFKqwJPA7QV49xu+FhKgBzstHiPez4tVyGfSW4B6e4Fx4G2lvgN41+H5RqCMTBufUN0LncidHE3Vg7GMeuA13BbWQoHZVoN0ATmgXCpsN/wKLgDACYN4nqURYTv28XgUASrIhSRrJFRpzJpQxn3YBxUAJOM6nmHkDHJQGQurgC8z7EcXAOQiUtZt0EkkIssTLFloQ77z9T51DREARISskbCIHFTupc7xdB30IGJmRXhLIgDIdBhxMDyHHFcNJc9kJVXKSZsh4FPynS14CVD0EKICvIOEsa6YQxbTy/yVe2xHjuPWEnbq/B0fIGcOUbAFSYSGelsxSjVW52uoIHdyiixUscoC8GC8rv8T3UiIPBqpM3nKcMwOWyghJ7JHkJT2Ur35YeBWy8lG/mmqFzkzvA9JeHQhi1/IS9U1XEOu9Z4gzhlFE0000cR/A38COfGlafZLMksAAAAASUVORK5CYII=');
+    return Image.memory(
+      bytes,
+      color: color,
+      width: size,
+      height: size,
+    );
+  }
+}

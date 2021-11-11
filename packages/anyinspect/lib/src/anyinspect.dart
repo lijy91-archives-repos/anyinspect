@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import 'anyinspect_assistive_ball.dart';
 import 'anyinspect_connection_impl_ws.dart';
 
 class AnyInspect with AnyInspectClientListener {
@@ -22,7 +23,11 @@ class AnyInspect with AnyInspectClientListener {
 
   Timer? _reconnectTimer;
 
+  AnyInspectClient get client => _client;
   List<AnyInspectPlugin> get allPlugins => _client.plugins.toList();
+
+  AnyInspectAssistiveBallManager assistiveBall =
+      AnyInspectAssistiveBallManager();
 
   void addPlugin(AnyInspectPlugin plugin) {
     _client.plugins.add(plugin);
@@ -62,7 +67,6 @@ class AnyInspect with AnyInspectClientListener {
     List<Future<String>> futureList = [];
 
     String? ip = await NetworkInfo().getWifiIP();
-    print(ip);
     for (int i = 1; i < 256; ++i) {
       Future<String> future = Future<String>.sync(() async {
         final host = '${ip!.substring(0, ip.lastIndexOf('.'))}.$i';
