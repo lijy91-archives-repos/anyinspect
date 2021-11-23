@@ -41,6 +41,9 @@ import 'package:anyinspect_plugin_shared_preferences/anyinspect_plugin_shared_pr
 import 'package:flutter/foundation.dart';
 
 Future<void> main(List<String> args) async {
+  // Must add this line.
+  WidgetsFlutterBinding.ensureInitialized();
+
   if (!kReleaseMode) {
     AnyInspect anyInspect = AnyInspect.instance;
     anyInspect.addPlugin(AnyInspectPluginDatabase());
