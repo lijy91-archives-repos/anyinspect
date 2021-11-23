@@ -4,7 +4,7 @@ A tool for debugging your [Flutter](https://flutter.dev) apps.
 
 > The desktop app source code can be found in the [anyinspect_app](https://github.com/anyinspect/anyinspect_app) repo.
 
-[![Discord](https://img.shields.io/badge/discord-%237289DA.svg?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/uJcUXQrs)
+[![Discord](https://img.shields.io/badge/discord-%237289DA.svg?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/RzFrAhmXFY)
 
 ---
 
