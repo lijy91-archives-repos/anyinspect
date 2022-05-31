@@ -31,7 +31,7 @@ class Inspector extends StatelessWidget {
           if (detailView != null) detailView!,
         ],
         controller: MultiSplitViewController(
-          initialWeights: initialWeights,
+          weights: initialWeights,
         ),
       ),
     );
